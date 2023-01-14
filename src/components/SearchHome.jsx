@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useDebounce from '../hooks/useDebounce';
+import Api from '../api';
 
 export const SearchHome = () => {
     
@@ -16,9 +17,14 @@ export const SearchHome = () => {
 
       setSearchPincodes([]);
 
-      const data = await fetch(
-        `${process.env.REACT_APP_BASE_API_URL}/api/v1/pincodes/search?q=${debouncedSearch}`
-      ).then((res) => res.json());
+      const data = await Api( 
+        `/api/v1/pincodes/search?q=${debouncedSearch}`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => res.json());
       console.log("search response: ", data);
       setSearchPincodes(data.response);
 
