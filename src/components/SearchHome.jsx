@@ -17,7 +17,7 @@ export const SearchHome = () => {
       setSearchPincodes([]);
 
       const data = await fetch(
-        `http://localhost:8000/api/v1/pincodes/search?q=${debouncedSearch}`
+        `${process.env.REACT_APP_BASE_API_URL}/api/v1/pincodes/search?q=${debouncedSearch}`
       ).then((res) => res.json());
       console.log("search response: ", data);
       setSearchPincodes(data.response);
