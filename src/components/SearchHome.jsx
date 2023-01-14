@@ -24,7 +24,7 @@ export const SearchHome = () => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((res) => res.json());
+        });
       console.log("search response: ", data);
       setSearchPincodes(data.response);
 
