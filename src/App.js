@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Navbar from './components/Nav/Navbar';
-import Search from './components/Search';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Disclaimer from './pages/Disclaimer';
@@ -16,21 +15,18 @@ function App() {
       
       <BrowserRouter>
       <Navbar />
-        <Routes>
-          <Route path="/" exact element={<Home />} />
-          <Route path='/about' exact element={<About />} />
-          <Route path='/contact' exact element={<Contact />} />
-          <Route path="/disclaimer" exact element={<Disclaimer />} />
-          <Route path="/privacy-policy" exact element={<PrivacyPolicy />} />
-          <Route path="/term-condition" exact element={<TermCondition />} />
-        </Routes>
+        <div style={{minHeight: '80vh'}}>
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+            <Route path='/about' exact element={<About />} />
+            <Route path='/contact' exact element={<Contact />} />
+            <Route path="/disclaimer" exact element={<Disclaimer />} />
+            <Route path="/privacy-policy" exact element={<PrivacyPolicy />} />
+            <Route path="/term-condition" exact element={<TermCondition />} />
+          </Routes>
+        </div>
         <Footer />
       </BrowserRouter> 
-      {/* <Search details={initialDetails}/> */}
-      {/* <SearchHome /> */}
-      {/* <Disclaimer /> */}
-      {/* <Search /> */}
-      
     </div>
   );
 }

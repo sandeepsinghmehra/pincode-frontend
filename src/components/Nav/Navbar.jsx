@@ -7,6 +7,7 @@ const Nav = styled.nav`
     width: 100%;
     height: 55px;
     border-bottom: 2px solid #f1f1f1;
+    background-color: #0D2538;
     display: flex;
     justify-content: space-between;
     .logo {
@@ -15,14 +16,12 @@ const Nav = styled.nav`
     .anchor{
         display: flex;
         align-items: center;
-    }
-    .logo_image{
-        /* mr-3 sm:h-9 */
-        object-fit: cover;
-        height: 30px;
+        color: #eee;
     }
     .logo_heading{
         /*  dark:text-white */
+        color: #fff;
+        padding-left: 20px;
         align-self: center;
         font-size: x-large;
         font-weight: bold;
@@ -35,7 +34,6 @@ const Navbar = () => {
         <Nav>
             <div className="logo">
                 <Link to={'/'} className={"anchor"}>
-                    <image src="/logo.jpg" className={"logo_image"} alt="Logo" width={72} height={16} />
                     <span className={"logo_heading"}>Pincode India</span>
                 </Link>
             </div>

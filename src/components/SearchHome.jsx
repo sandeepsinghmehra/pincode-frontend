@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import useDebounce from '../hooks/useDebounce';
 import Api from '../api';
+import Scroll from './Scroll';
+import SearchList from './SearchList';
 
 export const SearchHome = () => {
     
@@ -8,6 +10,7 @@ export const SearchHome = () => {
   const [search, setSearch] = useState(null);
   const [searchPincode, setSearchPincode] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [searchShow, setSearchShow] = useState(false); 
 
   const debouncedSearch = useDebounce(search, 500);
 
@@ -17,7 +20,7 @@ export const SearchHome = () => {
 
       setSearchPincodes([]);
 
-      const data = await Api( 
+      const searchResults = await Api( 
         `/api/v1/pincodes/search?q=${debouncedSearch}`,
         {
             method: 'GET',
@@ -25,27 +28,39 @@ export const SearchHome = () => {
                 'Content-Type': 'application/json'
             }
         });
-      console.log("search response: ", data);
-      setSearchPincodes(data.response);
-
+      
+      setSearchPincodes(searchResults.data.response);
+      setSearchShow(true);
       setLoading(false);
     }
 
     if (debouncedSearch) fetchData();
   }, [debouncedSearch]);
-
+  function searchList() {
+    if (searchShow) {
+      console.log("searchList ", searchShow, searchPincodes)
+      return (<>
+        {searchPincodes !== undefined && searchPincodes.length !== 0 ?
+          <Scroll>
+            <SearchList filteredPincodes={searchPincodes} />
+          </Scroll>
+          : <div>Not found</div>
+        }</>
+      );
+    }
+  }
   return (
     <div>
         <main>
           <div>
-            <span>Search village name or area name</span>
+            <span>Search Pincode via village name </span>
             <input
               type="search"
-              placeholder="search village name or area name..."
+              placeholder="village name..."
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div>
+          <div >
             <span>Search via pincode</span>
             <form>
               <input
@@ -57,18 +72,7 @@ export const SearchHome = () => {
             </form>
           </div>
             {loading && <p>Loading...</p>}
-
-            {searchPincodes?.map((pincode) => {
-                return (
-                    <div key={pincode._id}>
-                    <div>
-                        <p>
-                        {pincode.village_name} {pincode.pincode}
-                        </p>
-                    </div>
-                    </div>
-                );
-            })}
+            {searchList()}
         </main>
     </div>
   );
